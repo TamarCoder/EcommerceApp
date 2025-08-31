@@ -1,6 +1,7 @@
 "use client"
 
 import CategoryButtons from "../CategoryButtons/CategoryButtons";
+import FilterToggleButton from "../FilterToggleButton/FilterToggleButton";
 
 const HeaderFilters = () => {
 
@@ -11,7 +12,7 @@ const HeaderFilters = () => {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                          <CategoryButtons/>
-                        {/*ფილტერ ღილაკი*/}
+                         <FilterToggleButton/>
                     </div>
                     <div className="flex items-center gap-4">
                          {/*სორტირება*/}
