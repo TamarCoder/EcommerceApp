@@ -21,11 +21,14 @@ const ViewToggle = () =>  {
             </button>
             <button
                 onClick={() => setIsGridView(false)}
+                
                 className={`p-2 rounded ${
                     !isGridView ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
                 } transition-colors`}
             >
                 <List className="w-4 h-4" />
+
+
             </button>
         </div>
     )
