@@ -2,6 +2,8 @@
 import Header from "../Header/Header";
 import HeaderFilters from "../HeaderFilters/HeaderFilters";
 import Main from "../Main/Main";
+import Footer from "../footer/Footer";
+
 
 
 
@@ -12,6 +14,7 @@ const  MainAplication = () => {
              <HeaderFilters/>
              <Main/>
             {/*<ShoppingCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />*/}
+           <Footer/>
         </section>
     )
 }
