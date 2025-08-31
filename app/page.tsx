@@ -1,5 +1,5 @@
 import Image from "next/image";
-import MainAplication from "./MainApplication/MainAplication";
+import MainAplication from "./components/MainApplication/MainAplication";
 
 export default function Home() {
   return (
