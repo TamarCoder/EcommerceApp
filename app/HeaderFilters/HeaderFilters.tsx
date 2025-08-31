@@ -3,6 +3,7 @@
 import CategoryButtons from "../CategoryButtons/CategoryButtons";
 import FilterToggleButton from "../FilterToggleButton/FilterToggleButton";
 import SortDropdown from "../SortDropdown/SortDropdown";
+import ViewToggle from "../ViewToggle/ViewToggle";
 
 const HeaderFilters = () => {
 
@@ -17,7 +18,7 @@ const HeaderFilters = () => {
                     </div>
                     <div className="flex items-center gap-4">
                          <SortDropdown/>
-                         {/*ვიუთოგლი*/}
+                         <ViewToggle/>
                     </div>
                 </div>
                 {/*ექსნელაფლე ფილთერ*/}
