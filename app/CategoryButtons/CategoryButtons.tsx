@@ -2,7 +2,7 @@ const CategoryButtons = () => {
 
     const categories = ['all', 'electronics', 'accessories', 'bags'];
 
-    
+
     // const filteredProducts = products.filter(product => {
     //     const matchesCategory = filters.category === 'all' || product.category === filters.category;
     //     return  matchesCategory
