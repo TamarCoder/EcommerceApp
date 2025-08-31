@@ -21,3 +21,5 @@ const SortDropdown = () => {
         ))}
     </select>)
 }
+
+export default SortDropdown;

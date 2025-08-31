@@ -2,6 +2,7 @@
 
 import CategoryButtons from "../CategoryButtons/CategoryButtons";
 import FilterToggleButton from "../FilterToggleButton/FilterToggleButton";
+import SortDropdown from "../SortDropdown/SortDropdown";
 
 const HeaderFilters = () => {
 
@@ -15,7 +16,7 @@ const HeaderFilters = () => {
                          <FilterToggleButton/>
                     </div>
                     <div className="flex items-center gap-4">
-                         {/*სორტირება*/}
+                         <SortDropdown/>
                          {/*ვიუთოგლი*/}
                     </div>
                 </div>
