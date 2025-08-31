@@ -20,6 +20,9 @@ const CategoryButtons = () => {
                             : 'text-gray-600 hover:bg-gray-100'
                     }`}
                 >
+
+
+                    
                     {category.charAt(0).toUpperCase() + category.slice(1)}
                 </button>
             ))}
