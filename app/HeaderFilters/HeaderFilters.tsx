@@ -4,6 +4,7 @@ import CategoryButtons from "../CategoryButtons/CategoryButtons";
 import FilterToggleButton from "../FilterToggleButton/FilterToggleButton";
 import SortDropdown from "../SortDropdown/SortDropdown";
 import ViewToggle from "../ViewToggle/ViewToggle";
+import ExpandableFilters from "../ExpandableFilters/ExpandableFilters";
 
 const HeaderFilters = () => {
 
@@ -21,7 +22,7 @@ const HeaderFilters = () => {
                          <ViewToggle/>
                     </div>
                 </div>
-                {/*ექსნელაფლე ფილთერ*/}
+                <ExpandableFilters/>
             </div>
         </div>
     )
