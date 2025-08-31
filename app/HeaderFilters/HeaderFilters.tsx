@@ -1,7 +1,6 @@
 "use client"
 
-
-
+import CategoryButtons from "../CategoryButtons/CategoryButtons";
 
 const HeaderFilters = () => {
 
@@ -11,7 +10,7 @@ const HeaderFilters = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        {/*კატეგორიები*/}
+                         <CategoryButtons/>
                         {/*ფილტერ ღილაკი*/}
                     </div>
                     <div className="flex items-center gap-4">
