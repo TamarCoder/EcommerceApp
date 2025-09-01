@@ -1,4 +1,3 @@
-// CheckoutForm/CheckoutForm.tsx
 "use client";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { X } from "lucide-react";
@@ -10,15 +9,12 @@ import {
   formatExpiryDate,
 } from "../checkoutValidation/checkoutValidation";
 
-// Import step components
 import PersonalInfoStep from "./steps/PersonalInfoStep";
 import ShippingAddressStep from "./steps/ShippingAddressStep";
 import PaymentInfoStep from "./steps/PaymentInfoStep";
 import OrderSummary from "./components/OrderSummary";
 import ProgressSteps from "./components/ProgressSteps";
-// SuccessModal არ გვჭირდება - alert გამოვიყენებთ
 
-// Import validation logic
 import { useFormValidation } from "./hooks/useFormValidation";
 
 interface CheckoutFormProps {
@@ -31,7 +27,6 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
-  // Use custom validation hook
   const {
     formData,
     errors,
@@ -43,16 +38,10 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
     validateField,
   } = useFormValidation(checkoutInitialValues);
 
-  // Input handlers
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = ( e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-
     let newValue = type === "checkbox" ? checked : value;
-
-    // Special formatting for card number and expiry
     if (name === "cardNumber") {
       newValue = formatCardNumber(value);
     } else if (name === "expiryDate") {
@@ -63,8 +52,6 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
       ...prev,
       [name]: newValue,
     }));
-
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -94,7 +81,6 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
     }
   };
 
-  // Step navigation
   const handleNextStep = () => {
     if (validateStep(currentStep)) {
       setCurrentStep(currentStep + 1);
@@ -105,11 +91,9 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
     setCurrentStep(currentStep - 1);
   };
 
-  // Form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Validate all fields
     if (!validateStep(1) || !validateStep(2) || !validateStep(3)) {
       return;
     }
@@ -117,10 +101,8 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
     setIsProcessing(true);
 
     try {
-      // Simulate payment processing
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Create order data
       const orderData = {
         orderId: `ORD-${Date.now()}`,
         customer: {
@@ -139,13 +121,11 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
         timestamp: new Date().toISOString(),
       };
 
-      // Store order data (in real app, send to backend)
       localStorage.setItem("lastOrder", JSON.stringify(orderData));
 
-      // Show success alert and close modal
       alert("Order completed successfully! Thank you for your purchase.");
       clearCart();
-      onClose(); // Close the checkout modal
+      onClose();  
     } catch (error) {
       console.error("Payment failed:", error);
       alert("Payment processing failed. Please try again.");
@@ -153,8 +133,6 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
       setIsProcessing(false);
     }
   };
- 
-  // Render current step
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 1:
@@ -208,19 +186,14 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
           </button>
         </div>
 
-        {/* Progress Steps */}
         <ProgressSteps currentStep={currentStep} />
 
         <form onSubmit={handleSubmit}>
           <div className="grid md:grid-cols-3 gap-8 p-6">
-            {/* Form Steps */}
             <div className="md:col-span-2 space-y-8">{renderCurrentStep()}</div>
-
-            {/* Order Summary Sidebar */}
             <OrderSummary cart={cart} total={total} />
           </div>
-
-          {/* Navigation Buttons */}
+          
           <div className="sticky bottom-0 bg-white border-t p-6">
             <div className="flex justify-between items-center max-w-4xl mx-auto">
               {currentStep > 1 ? (
