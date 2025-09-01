@@ -74,3 +74,5 @@ const products = [
         description: 'UV protection with stylish design'
     }
 ]
+
+ 
