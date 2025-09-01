@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import useEcommerceStore from "../../Store/useStore";
-import { Check, Heart, Star } from "lucide-react";
+import { Check, Heart, ShoppingCart, Star } from "lucide-react";
+import QuickViewModal from "../QuickViewModal/QuickViewModal";
 
 const ProductCard = ({ product }: any) => {
   const { cart, favorites, addToCart, toggleFavorite,   } = useEcommerceStore();
@@ -145,17 +146,16 @@ const ProductCard = ({ product }: any) => {
             </>
           ) : (
             <>
-              {/* <ShoppingCart className="w-5 h-5" /> */}
+              <ShoppingCart className="w-5 h-5" />
               Add to Cart
             </>
           )}
         </button>
       </div>
-
-      {/* Quick View Modal
+      
       {showQuickView && (
         <QuickViewModal product={product} onClose={() => setShowQuickView(false)} />
-      )} */}
+      )}
     </div>
   );
 };
