@@ -6,7 +6,7 @@ import { Check, Heart, ShoppingCart, Star } from "lucide-react";
 import QuickViewModal from "../QuickViewModal/QuickViewModal";
 
 const ProductCard = ({ product }: any) => {
-  const { cart, favorites, addToCart, toggleFavorite,   } = useEcommerceStore();
+  const { cart, favorites, addToCart, toggleFavorite } = useEcommerceStore();
   const [isGridView, setIsGridView] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showQuickView, setShowQuickView] = useState(false);
@@ -22,16 +22,21 @@ const ProductCard = ({ product }: any) => {
 
   return (
     <div
-      className={`group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden ${
-        isGridView ? "" : "flex"
-      } 
-  w-full sm:w-[300px] md:w-[350px] lg:w-[400px] 
-  h-[400px] sm:h-[420px] md:h-[440px] lg:h-[450px]`}
+      className={`
+        group relative bg-white rounded-2xl shadow-sm hover:shadow-xl 
+        transition-all duration-300 overflow-hidden
+        w-full max-w-full 
+        sm:w-[300px] sm:h-[420px] 
+        md:w-[350px] md:h-[440px] 
+        lg:w-[400px] lg:h-[450px]
+        h-auto
+        ${isGridView ? "" : "flex"}
+      `}
     >
       {/* Badge */}
       {product.badge && (
         <span
-          className={`absolute cursor-pointer  top-4 left-4 z-10 px-3 py-1 text-xs font-semibold rounded-full ${
+          className={`absolute top-4 left-4 z-10 px-3 py-1 text-xs font-semibold rounded-full ${
             product.badge === "Sale"
               ? "bg-red-100 text-red-600"
               : product.badge === "New"
@@ -48,7 +53,7 @@ const ProductCard = ({ product }: any) => {
       {/* Favorite Button */}
       <button
         onClick={() => toggleFavorite(product.id)}
-        className="absolute cursor-pointer  top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur rounded-full shadow-md hover:scale-110 transition-transform"
+        className="absolute top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur rounded-full shadow-md hover:scale-110 transition-transform"
       >
         <Heart
           className={`w-5 h-5 ${
@@ -59,7 +64,7 @@ const ProductCard = ({ product }: any) => {
 
       {/* Image */}
       <div
-        className={`relative overflow-hidden   ${
+        className={`relative overflow-hidden ${
           isGridView ? "h-64" : "w-48 h-48"
         }`}
       >
@@ -67,7 +72,7 @@ const ProductCard = ({ product }: any) => {
           <div className="absolute inset-0 bg-gray-100 animate-pulse" />
         )}
         <Image
-          src={product.image}
+          src={`${product.image}?auto=format&fit=crop&w=500&q=80`}
           alt={product.name}
           fill
           unoptimized
@@ -78,7 +83,7 @@ const ProductCard = ({ product }: any) => {
         />
 
         {/* Quick View Overlay */}
-        <div className="absolute cursor-pointer   inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <button
             onClick={() => setShowQuickView(true)}
             className="px-4 py-2 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-colors"
@@ -95,7 +100,7 @@ const ProductCard = ({ product }: any) => {
         </h3>
 
         {/* Rating */}
-        <div className="flex cursor-pointer  items-center gap-2 mb-2">
+        <div className="flex items-center gap-2 mb-2">
           <div className="flex items-center">
             {[...Array(5)].map((_, i) => (
               <Star
@@ -108,9 +113,7 @@ const ProductCard = ({ product }: any) => {
               />
             ))}
           </div>
-          <span className=" cursor-pointer  text-sm text-gray-500">
-            ({product.reviews})
-          </span>
+          <span className="text-sm text-gray-500">({product.reviews})</span>
         </div>
 
         {/* Price */}
@@ -133,7 +136,7 @@ const ProductCard = ({ product }: any) => {
         {/* Add to Cart Button */}
         <button
           onClick={() => addToCart(product)}
-          className={` cursor-pointer  w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
+          className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
             isInCart
               ? "bg-green-100 text-green-700 hover:bg-green-200"
               : "bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-lg"
@@ -152,9 +155,13 @@ const ProductCard = ({ product }: any) => {
           )}
         </button>
       </div>
-      
+
+      {/* Quick View Modal */}
       {showQuickView && (
-        <QuickViewModal product={product} onClose={() => setShowQuickView(false)} />
+        <QuickViewModal
+          product={product}
+          onClose={() => setShowQuickView(false)}
+        />
       )}
     </div>
   );
