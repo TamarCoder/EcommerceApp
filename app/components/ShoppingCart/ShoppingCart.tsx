@@ -3,6 +3,7 @@
 import { useState } from "react";
 import useEcommerceStore from "../../Store/useStore";
 import { Minus, Plus, X } from "lucide-react";
+import CheckoutForm from "../CheckoutForm/CheckoutForm";
 
 interface ShoppingCartProps {
   isOpen: boolean;
@@ -116,9 +117,9 @@ const ShoppingCart = ({ isOpen, onClose }: ShoppingCartProps) => {
         )}
 
         {/* Uncomment and implement when CheckoutForm is ready */}
-        {/* {showCheckout && (
+        {showCheckout && (
           <CheckoutForm onClose={() => setShowCheckout(false)} total={total} />
-        )} */}
+        )}
       </div>
     </div>
   );
