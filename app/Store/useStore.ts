@@ -1,178 +1,217 @@
-// store/ecommerceStore.ts
+// Store/useStore.ts
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
-// Types
+// Product interface
 interface Product {
   id: number;
   name: string;
   price: number;
-  originalPrice?: number;
+  originalPrice: number | null;
   image: string;
   category: string;
   rating: number;
   reviews: number;
-  badge?: string;
+  badge: string | null;
   description: string;
 }
 
+// Cart item interface
 interface CartItem extends Product {
   quantity: number;
 }
 
+// Filters interface
 interface Filters {
   category: string;
-  priceRange: [number, number];
-  rating: number;
-  sortBy: string;
+  searchQuery: string;
+  sortBy: 'featured' | 'price-low' | 'price-high' | 'rating';
+  viewMode: 'grid' | 'list';
+  showFilters: boolean;
+  priceRange: {
+    min: string;
+    max: string;
+  };
+  minRating: number;
 }
 
-interface EcommerceStore {
+// Store state interface
+interface EcommerceState {
   // State
   cart: CartItem[];
   favorites: number[];
   filters: Filters;
-  searchQuery: string;
-  
-  // Cart Actions
+
+  // Cart actions
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
-  getCartTotal: () => number;
-  getCartItemsCount: () => number;
-  
-  // Favorites Actions
+
+  // Favorites actions
   toggleFavorite: (productId: number) => void;
-  isFavorite: (productId: number) => boolean;
-  clearFavorites: () => void;
-  
-  // Filter Actions
-  setFilter: (filterType: keyof Filters, value: any) => void;
-  resetFilters: () => void;
-  
-  // Search Actions
-  setSearchQuery: (query: string) => void;
-  clearSearch: () => void;
+
+  // Filter actions
+  setCategory: (category: string) => void;
+  setSearchQuery: (searchQuery: string) => void;
+  setSortBy: (sortBy: Filters['sortBy']) => void;
+  setViewMode: (viewMode: Filters['viewMode']) => void;
+  toggleFilters: () => void;
+  setPriceRange: (priceRange: Filters['priceRange']) => void;
+  setMinRating: (minRating: number) => void;
+  clearFilters: () => void;
+
+  // Helper function
+  getFilteredProducts: (products: Product[]) => Product[];
 }
 
-// Initial State
-const initialFilters: Filters = {
-  category: 'all',
-  priceRange: [0, 1000],
-  rating: 0,
-  sortBy: 'featured'
-};
+const useEcommerceStore = create<EcommerceState>((set, get) => ({
+  // Initial State
+  cart: [],
+  favorites: [],
+  
+  filters: {
+    category: 'all',
+    searchQuery: '',
+    sortBy: 'featured',
+    viewMode: 'grid',
+    showFilters: false,
+    priceRange: {
+      min: '',
+      max: ''
+    },
+    minRating: 0
+  },
 
-// Create Store with Persist
-const useEcommerceStore = create<EcommerceStore>()(
-  persist(
-    (set, get) => ({
-      // Initial State
-      cart: [],
-      favorites: [],
-      filters: initialFilters,
-      searchQuery: '',
-      
-      // Cart Actions
-      addToCart: (product) => set((state) => {
-        const existingItem = state.cart.find(item => item.id === product.id);
-        
-        if (existingItem) {
-          // If product exists, increase quantity
-          return {
-            cart: state.cart.map(item =>
-              item.id === product.id
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
-            )
-          };
-        }
-        
-        // Add new product to cart
-        return { 
-          cart: [...state.cart, { ...product, quantity: 1 }] 
-        };
-      }),
-      
-      removeFromCart: (productId) => set((state) => ({
-        cart: state.cart.filter(item => item.id !== productId)
-      })),
-      
-      updateQuantity: (productId, quantity) => set((state) => {
-        if (quantity <= 0) {
-          // Remove item if quantity is 0 or less
-          return {
-            cart: state.cart.filter(item => item.id !== productId)
-          };
-        }
-        
-        return {
-          cart: state.cart.map(item =>
-            item.id === productId 
-              ? { ...item, quantity } 
-              : item
-          )
-        };
-      }),
-      
-      clearCart: () => set({ cart: [] }),
-      
-      getCartTotal: () => {
-        const state = get();
-        return state.cart.reduce((total, item) => {
-          return total + (item.price * item.quantity);
-        }, 0);
-      },
-      
-      getCartItemsCount: () => {
-        const state = get();
-        return state.cart.reduce((count, item) => count + item.quantity, 0);
-      },
-      
-      // Favorites Actions
-      toggleFavorite: (productId) => set((state) => {
-        const isFavorited = state.favorites.includes(productId);
-        
-        return {
-          favorites: isFavorited
-            ? state.favorites.filter(id => id !== productId)
-            : [...state.favorites, productId]
-        };
-      }),
-      
-      isFavorite: (productId) => {
-        const state = get();
-        return state.favorites.includes(productId);
-      },
-      
-      clearFavorites: () => set({ favorites: [] }),
-      
-      // Filter Actions
-      setFilter: (filterType, value) => set((state) => ({
-        filters: {
-          ...state.filters,
-          [filterType]: value
-        }
-      })),
-      
-      resetFilters: () => set({
-        filters: initialFilters
-      }),
-      
-      // Search Actions
-      setSearchQuery: (query) => set({ searchQuery: query }),
-      
-      clearSearch: () => set({ searchQuery: '' })
-    }),
-    {
-      name: 'ecommerce-store', // localStorage key
-      partialize: (state) => ({ 
-        cart: state.cart,
-        favorites: state.favorites 
-      })  
+  // Cart Actions
+  addToCart: (product: Product) => set((state) => {
+    const existingItem = state.cart.find((item) => item.id === product.id);
+    
+    if (existingItem) {
+      return {
+        cart: state.cart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      };
+    } else {
+      return {
+        cart: [...state.cart, { ...product, quantity: 1 }]
+      };
     }
-  )
-);
+  }),
+
+  removeFromCart: (productId: number) => set((state) => ({
+    cart: state.cart.filter((item) => item.id !== productId)
+  })),
+
+  updateQuantity: (productId: number, quantity: number) => set((state) => ({
+    cart: state.cart.map((item) =>
+      item.id === productId ? { ...item, quantity } : item
+    )
+  })),
+
+  clearCart: () => set({ cart: [] }),
+
+  // Favorites Actions
+  toggleFavorite: (productId: number) => set((state) => ({
+    favorites: state.favorites.includes(productId)
+      ? state.favorites.filter((id) => id !== productId)
+      : [...state.favorites, productId]
+  })),
+
+  // Filter Actions
+  setCategory: (category: string) => set((state) => ({
+    filters: { ...state.filters, category }
+  })),
+
+  setSearchQuery: (searchQuery: string) => set((state) => ({
+    filters: { ...state.filters, searchQuery }
+  })),
+
+  setSortBy: (sortBy: Filters['sortBy']) => set((state) => ({
+    filters: { ...state.filters, sortBy }
+  })),
+
+  setViewMode: (viewMode: Filters['viewMode']) => set((state) => ({
+    filters: { ...state.filters, viewMode }
+  })),
+
+  toggleFilters: () => set((state) => ({
+    filters: { ...state.filters, showFilters: !state.filters.showFilters }
+  })),
+
+  setPriceRange: (priceRange: Filters['priceRange']) => set((state) => ({
+    filters: { ...state.filters, priceRange }
+  })),
+
+  setMinRating: (minRating: number) => set((state) => ({
+    filters: { ...state.filters, minRating }
+  })),
+
+  clearFilters: () => set((state) => ({
+    filters: {
+      ...state.filters,
+      category: 'all',
+      searchQuery: '',
+      priceRange: { min: '', max: '' },
+      minRating: 0
+    }
+  })),
+
+  // Helper function for filtering products
+  getFilteredProducts: (products: Product[]) => {
+    const { filters } = get();
+    
+    let filtered = products.filter((product) => {
+      // Category filter
+      if (filters.category !== 'all' && product.category !== filters.category) {
+        return false;
+      }
+      
+      // Search filter
+      if (filters.searchQuery && 
+          !product.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) &&
+          !product.description.toLowerCase().includes(filters.searchQuery.toLowerCase())) {
+        return false;
+      }
+      
+      // Price filter
+      if (filters.priceRange.min && product.price < parseFloat(filters.priceRange.min)) {
+        return false;
+      }
+      if (filters.priceRange.max && product.price > parseFloat(filters.priceRange.max)) {
+        return false;
+      }
+      
+      // Rating filter
+      if (filters.minRating && product.rating < filters.minRating) {
+        return false;
+      }
+      
+      return true;
+    });
+
+    // Sort filtered products
+    switch (filters.sortBy) {
+      case 'price-low':
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-high':
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+      case 'rating':
+        filtered.sort((a, b) => b.rating - a.rating);
+        break;
+      case 'featured':
+      default:
+        // Keep original order for featured
+        break;
+    }
+
+    return filtered;
+  }
+}));
 
 export default useEcommerceStore;
+export type { Product, CartItem, Filters, EcommerceState}
