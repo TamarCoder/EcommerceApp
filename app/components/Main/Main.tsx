@@ -1,13 +1,33 @@
-import ProductCard from "../ProductCard/ProductCard";
+"use client";
 
-const products = [
+import ProductCard from "../ProductCard/ProductCard";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  originalPrice: number | null;
+  image: string;
+  category: string;
+  rating: number;
+  reviews: number;
+  badge: string | null;
+  description: string;
+}
+
+interface MainProps {
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
+}
+
+const products: Product[] = [
   {
     id: 1,
     name: "Premium Wireless Headphones",
     price: 299.99,
     originalPrice: 399.99,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
-
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
     category: "electronics",
     rating: 4.5,
     reviews: 234,
@@ -19,7 +39,7 @@ const products = [
     name: "Minimalist Watch",
     price: 149.99,
     originalPrice: 199.99,
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
     category: "accessories",
     rating: 4.8,
     reviews: 189,
@@ -31,7 +51,7 @@ const products = [
     name: "Smart Fitness Tracker",
     price: 89.99,
     originalPrice: 129.99,
-    image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6",
+    image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500",
     category: "electronics",
     rating: 4.3,
     reviews: 567,
@@ -43,7 +63,7 @@ const products = [
     name: "Leather Backpack",
     price: 199.99,
     originalPrice: null,
-    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa",
+    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500",
     category: "bags",
     rating: 4.7,
     reviews: 123,
@@ -55,7 +75,7 @@ const products = [
     name: "Wireless Earbuds",
     price: 159.99,
     originalPrice: 199.99,
-    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df",
+    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500",
     category: "electronics",
     rating: 4.6,
     reviews: 456,
@@ -67,35 +87,36 @@ const products = [
     name: "Designer Sunglasses",
     price: 129.99,
     originalPrice: null,
-    image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f",
+    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=500",
     category: "accessories",
     rating: 4.4,
-    reviews: 89,
+    reviews: 321,
     badge: null,
-    description: "UV protection with stylish design",
+    description: "Stylish and UV protected designer sunglasses",
   },
 ];
 
-const Main = () => {
+const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
   return (
-    <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-6 text-center sm:text-left">
-          <p className="text-gray-600 text-sm sm:text-base">
-            Showing <span className="font-semibold">{products.length}</span>{" "}
-            products
-          </p>
-        </div>
+    <>
+      <main className="w-full px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-6 text-center sm:text-left">
+            <p className="text-gray-600 text-sm sm:text-base">
+              Showing <span className="font-semibold">{products.length}</span> products
+            </p>
+          </div>
 
-        {/* Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+
+      <ShoppingCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+    </>
   );
 };
 
