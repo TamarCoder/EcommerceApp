@@ -1,25 +1,31 @@
-import { Search, ShoppingCart } from "lucide-react";
+"use client";
+import { Search, ShoppingCart as ShoppingCartIcon } from "lucide-react";
 import { useState } from "react";
 
-const Header = () => {
+
+interface HeaderProps {
+  isCartOpen: boolean;
+  setIsCartOpen: (open: boolean) => void;
+}
+
+
+const Header = ({ isCartOpen, setIsCartOpen } :  HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-4 sm:py-0">
-          
           {/* Logo */}
           <div className="flex justify-between items-center w-full sm:w-auto">
             <h1 className="text-2xl font-bold text-indigo-600">ShopHub</h1>
 
-            {/* Cart Icon (visible on small screens too) */}
+            {/* Cart icon for small screens */}
             <button
               className="sm:hidden relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
               onClick={() => setIsCartOpen(true)}
             >
-              <ShoppingCart className="w-6 h-6 text-gray-700" />
+              <ShoppingCartIcon className="w-6 h-6 text-gray-700" />
             </button>
           </div>
 
@@ -37,17 +43,12 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Cart Button (hidden on small, shown on sm and up) */}
+          {/* Cart button for medium+ screens */}
           <button
-            className="hidden sm:inline-flex relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
             onClick={() => setIsCartOpen(true)}
+            className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors hidden sm:block"
           >
-            <ShoppingCart className="w-6 h-6 text-gray-700" />
-            {/* 
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-indigo-600 text-white text-xs rounded-full flex items-center justify-center">
-                {cartItemsCount}
-              </span> 
-            */}
+            <ShoppingCartIcon className="w-6 h-6 text-gray-700" />
           </button>
         </div>
       </div>
