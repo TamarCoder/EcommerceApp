@@ -1,26 +1,25 @@
-"use client"
+"use client";
+
 import { useState } from "react";
 import useEcommerceStore from "../../Store/useStore";
 import { Minus, Plus, X } from "lucide-react";
-
-
 
 interface ShoppingCartProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const ShoppingCart = ({ isOpen, onClose } : ShoppingCartProps) => {
+const ShoppingCart = ({ isOpen, onClose }: ShoppingCartProps) => {
   const { cart, removeFromCart, updateQuantity, clearCart } = useEcommerceStore();
   const [showCheckout, setShowCheckout] = useState(false);
-  
+
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const tax = subtotal * 0.08;
   const shipping = subtotal > 50 ? 0 : 9.99;
   const total = subtotal + tax + shipping;
-  
+
   if (!isOpen) return null;
-  
+
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
@@ -34,10 +33,9 @@ const ShoppingCart = ({ isOpen, onClose } : ShoppingCartProps) => {
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         {cart.length === 0 ? (
           <div className="p-8 text-center">
-            {/* <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-300" /> */}
             <p className="text-gray-500">Your cart is empty</p>
           </div>
         ) : (
@@ -52,7 +50,7 @@ const ShoppingCart = ({ isOpen, onClose } : ShoppingCartProps) => {
                   />
                   <div className="flex-1">
                     <h4 className="font-medium text-gray-900">{item.name}</h4>
-                    <p className="text-sm text-gray-500">${item.price}</p>
+                    <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
                     <div className="flex items-center gap-2 mt-2">
                       <button
                         onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
@@ -78,7 +76,7 @@ const ShoppingCart = ({ isOpen, onClose } : ShoppingCartProps) => {
                 </div>
               ))}
             </div>
-            
+
             {/* Summary */}
             <div className="border-t p-4 space-y-2">
               <div className="flex justify-between text-sm">
@@ -92,21 +90,21 @@ const ShoppingCart = ({ isOpen, onClose } : ShoppingCartProps) => {
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Shipping</span>
                 <span className="font-medium">
-                  {shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}
+                  {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
                 </span>
               </div>
               <div className="flex justify-between text-lg font-semibold pt-2 border-t">
                 <span>Total</span>
                 <span>${total.toFixed(2)}</span>
               </div>
-              
+
               <button
                 onClick={() => setShowCheckout(true)}
                 className="w-full py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors mt-4"
               >
                 Proceed to Checkout
               </button>
-              
+
               <button
                 onClick={clearCart}
                 className="w-full py-2 text-gray-500 hover:text-gray-700 transition-colors"
@@ -116,7 +114,8 @@ const ShoppingCart = ({ isOpen, onClose } : ShoppingCartProps) => {
             </div>
           </>
         )}
-        
+
+        {/* Uncomment and implement when CheckoutForm is ready */}
         {/* {showCheckout && (
           <CheckoutForm onClose={() => setShowCheckout(false)} total={total} />
         )} */}
@@ -125,5 +124,4 @@ const ShoppingCart = ({ isOpen, onClose } : ShoppingCartProps) => {
   );
 };
 
-
-export default ShoppingCart
+export default ShoppingCart;

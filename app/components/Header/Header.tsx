@@ -1,15 +1,14 @@
 "use client";
+
 import { Search, ShoppingCart as ShoppingCartIcon } from "lucide-react";
 import { useState } from "react";
-
 
 interface HeaderProps {
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
 }
 
-
-const Header = ({ isCartOpen, setIsCartOpen } :  HeaderProps) => {
+const Header = ({ isCartOpen, setIsCartOpen }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -46,7 +45,7 @@ const Header = ({ isCartOpen, setIsCartOpen } :  HeaderProps) => {
           {/* Cart button for medium+ screens */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors hidden sm:block"
+            className=" cursor-pointer relative p-2 hover:bg-gray-100 rounded-lg transition-colors hidden sm:block"
           >
             <ShoppingCartIcon className="w-6 h-6 text-gray-700" />
           </button>
