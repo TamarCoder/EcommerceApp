@@ -73,6 +73,7 @@ const useEcommerceStore = create<EcommerceState>((set, get) => ({
     sortBy: 'featured',   
     viewMode: 'grid',   
     showFilters: false,   
+    
     priceRange: {
       min: '',            
       max: ''             

@@ -1,7 +1,7 @@
 // ViewToggle/ViewToggle.jsx
 "use client";
 import { Grid, List } from "lucide-react";
-import useEcommerceStore from "../../Store/useStore";
+ 
 
  
 const ViewToggle = () => {
@@ -40,3 +40,7 @@ const ViewToggle = () => {
 };
 
 export default ViewToggle;
+
+function useEcommerceStore(): { filters: any; setViewMode: any; } {
+  throw new Error("Function not implemented.");
+}
