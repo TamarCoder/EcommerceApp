@@ -18,12 +18,12 @@ const SortDropdown = () => {
   };
 
   return (
-    <div className="relative">
-      <label className="block text-xs text-gray-500 mb-1">Sort by</label>
+    <div className="relative cursor-pointer">
+      <label className="block cursor-pointer text-xs text-gray-500 mb-1">Sort by</label>
       <select
         value={filters.sortBy}
         onChange={handleSortChange}
-        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white cursor-pointer min-w-[160px]"
+        className="px-4 py-2  border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white cursor-pointer min-w-[160px]"
       >
         {sortOptions.map(option => (
           <option key={option.value} value={option.value}>

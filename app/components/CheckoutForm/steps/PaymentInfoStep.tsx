@@ -24,8 +24,8 @@ const PaymentInfoStep = ({
 }: PaymentInfoStepProps) => {
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <CreditCard className="w-5 h-5 text-indigo-600" />
+      <div className="flex cursor-pointer items-center gap-3">
+        <CreditCard className="w-5 cursor-pointer h-5 text-indigo-600" />
         <h3 className="text-lg font-semibold text-gray-900">Payment Information</h3>
       </div>
       
@@ -39,7 +39,7 @@ const PaymentInfoStep = ({
           value={formData.cardNumber}
           onChange={onCardNumberChange}
           onBlur={onBlur}
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+          className={`w-full cursor-pointer px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
             touched.cardNumber && errors.cardNumber
               ? 'border-red-300 bg-red-50'
               : 'border-gray-300'
@@ -57,7 +57,7 @@ const PaymentInfoStep = ({
       
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block cursor-pointer  text-sm font-medium text-gray-700 mb-2">
             Expiry Date
           </label>
           <input
@@ -89,7 +89,7 @@ const PaymentInfoStep = ({
             value={formData.cvv}
             onChange={onChange}
             onBlur={onBlur}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+            className={`w-full cursor-pointer px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
               touched.cvv && errors.cvv
                 ? 'border-red-300 bg-red-50'
                 : 'border-gray-300'
@@ -113,7 +113,7 @@ const PaymentInfoStep = ({
           value={formData.cardName}
           onChange={onChange}
           onBlur={onBlur}
-          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+          className={`w-full px-4 cursor-pointer py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
             touched.cardName && errors.cardName
               ? 'border-red-300 bg-red-50'
               : 'border-gray-300'
@@ -131,7 +131,7 @@ const PaymentInfoStep = ({
           name="agreeToTerms"
           checked={formData.agreeToTerms}
           onChange={onChange}
-          className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+          className="w-4 h-4 cursor-pointer text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
         />
         <label className="text-sm text-gray-700">
           I agree to the{' '}

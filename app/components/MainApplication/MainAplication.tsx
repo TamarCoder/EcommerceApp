@@ -11,7 +11,7 @@ const MainAplication = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
-    <section className="w-full h-auto bg-gray-50 flex flex-col gap-[32px]">
+    <section className="w-full  cursor-pointer h-auto bg-gray-50 flex flex-col gap-[32px]">
       <Header isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
       <HeaderFilters />
       <Main isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />

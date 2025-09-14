@@ -3,7 +3,9 @@
 import { Grid, List } from "lucide-react";
 import useEcommerceStore from "../../Store/useStore";
 
+ 
 const ViewToggle = () => {
+
   const { filters, setViewMode } = useEcommerceStore();
 
   return (
@@ -23,7 +25,7 @@ const ViewToggle = () => {
         </button>
         <button
           onClick={() => setViewMode('list')}
-          className={`p-2 rounded transition-colors ${
+          className={`p-2  cursor-pointer rounded transition-colors ${
             filters.viewMode === 'list' 
               ? 'bg-white shadow-sm text-indigo-600' 
               : 'hover:bg-gray-200 text-gray-600'

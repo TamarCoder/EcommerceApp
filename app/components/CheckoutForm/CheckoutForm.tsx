@@ -173,14 +173,14 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-auto">
+    <div className="fixed cursor-pointer  inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="bg-white cursor-pointer rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b p-6 flex justify-between items-center rounded-t-2xl">
+        <div className="sticky  cursor-pointer top-0 bg-white border-b p-6 flex justify-between items-center rounded-t-2xl">
           <h2 className="text-2xl font-bold text-gray-900">Checkout</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 cursor-pointer rounded-lg transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
@@ -189,18 +189,18 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
         <ProgressSteps currentStep={currentStep} />
 
         <form onSubmit={handleSubmit}>
-          <div className="grid md:grid-cols-3 gap-8 p-6">
-            <div className="md:col-span-2 space-y-8">{renderCurrentStep()}</div>
+          <div className="grid cursor-pointer md:grid-cols-3 gap-8 p-6">
+            <div className="md:col-span-2  cursor-pointer space-y-8">{renderCurrentStep()}</div>
             <OrderSummary cart={cart} total={total} />
           </div>
           
-          <div className="sticky bottom-0 bg-white border-t p-6">
-            <div className="flex justify-between items-center max-w-4xl mx-auto">
+          <div className="sticky cursor-pointer bottom-0 bg-white border-t p-6">
+            <div className="flex cursor-pointer  justify-between items-center max-w-4xl mx-auto">
               {currentStep > 1 ? (
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="px-6 py-3 cursor-pointer border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Previous
                 </button>
@@ -212,7 +212,7 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                  className="px-6 cursor-pointer py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
                 >
                   Next
                 </button>
@@ -220,7 +220,7 @@ const CheckoutForm = ({ onClose, total }: CheckoutFormProps) => {
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className={`px-8 py-3 rounded-lg font-medium transition-colors ${
+                  className={`px-8 cursor-pointer  py-3 rounded-lg font-medium transition-colors ${
                     isProcessing
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                       : "bg-indigo-600 text-white hover:bg-indigo-700"

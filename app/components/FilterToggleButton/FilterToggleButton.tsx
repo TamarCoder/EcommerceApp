@@ -11,7 +11,7 @@ const FilterToggleButton = () => {
   return (
     <button
       onClick={toggleFilters}
-      className={`flex items-center gap-2 px-4 py-2 border rounded-lg transition-colors ${
+      className={`flex items-center cursor-pointer gap-2 px-4 py-2 border rounded-lg transition-colors ${
         filters.showFilters 
           ? 'border-indigo-300 bg-indigo-50 text-indigo-700' 
           : 'border-gray-300 hover:bg-gray-50 text-gray-700'

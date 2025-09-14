@@ -12,11 +12,11 @@ const ProgressSteps = ({ currentStep }: ProgressStepsProps) => {
 
   return (
     <div className="px-6 py-4 border-b">
-      <div className="flex items-center justify-between max-w-md mx-auto">
+      <div className="flex items-cente rcursor-pointer  justify-between max-w-md mx-auto">
         {steps.map((step, index) => (
           <div key={step.number} className="flex items-center">
             <div
-              className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
+              className={`flex cursor-pointer items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-colors ${
                 currentStep >= step.number
                   ? 'bg-indigo-600 text-white'
                   : 'bg-gray-200 text-gray-500'
@@ -25,14 +25,14 @@ const ProgressSteps = ({ currentStep }: ProgressStepsProps) => {
               {step.number}
             </div>
             {index < steps.length - 1 && (
-              <div className={`w-16 h-0.5 mx-2 transition-colors ${
+              <div className={`w-16 h-0.5 cursor-pointer mx-2 transition-colors ${
                 currentStep > step.number ? 'bg-indigo-600' : 'bg-gray-200'
               }`} />
             )}
           </div>
         ))}
       </div>
-      <div className="flex justify-between max-w-md mx-auto mt-2 text-xs text-gray-500">
+      <div className="flex cursor-pointer justify-between max-w-md mx-auto mt-2 text-xs text-gray-500">
         {steps.map(step => (
           <span key={step.number}>{step.label}</span>
         ))}

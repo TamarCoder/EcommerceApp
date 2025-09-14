@@ -30,8 +30,8 @@ const ExpandableFilters = () => {
   };
 
   return (
-    <div className="mt-4 pt-4 border-t bg-gray-50 rounded-lg p-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="mt-4 cursor-pointer pt-4 border-t bg-gray-50 rounded-lg p-4">
+      <div className="grid cursor-pointer grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Price Range */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -42,7 +42,7 @@ const ExpandableFilters = () => {
               type="number"
               value={tempPriceRange.min}
               onChange={(e) => handlePriceChange('min', e.target.value)}
-              className="w-20 px-2 py-1 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-20 cursor-pointer px-2 py-1 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Min"
               min="0"
             />
@@ -51,7 +51,7 @@ const ExpandableFilters = () => {
               type="number"
               value={tempPriceRange.max}
               onChange={(e) => handlePriceChange('max', e.target.value)}
-              className="w-20 px-2 py-1 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-20 cursor-pointer px-2 py-1 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Max"
               min="0"
             />
@@ -63,12 +63,12 @@ const ExpandableFilters = () => {
           <label className="block text-sm font-medium text-gray-700 mb-3">
             Minimum Rating
           </label>
-          <div className="flex items-center gap-1">
+          <div className="flex cursor-pointer items-center gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
                 onClick={() => handleRatingClick(star)}
-                className={`p-1 rounded hover:bg-gray-100 transition-colors ${
+                className={`p-1 cursor-pointer rounded hover:bg-gray-100 transition-colors ${
                   star <= filters.minRating ? 'text-yellow-400' : 'text-gray-300'
                 }`}
               >
@@ -92,19 +92,19 @@ const ExpandableFilters = () => {
           <label className="block text-sm font-medium text-gray-700 mb-3">
             Active Filters
           </label>
-          <div className="space-y-1">
+          <div className="space-y-1 cursor-pointer ">
             {filters.category !== 'all' && (
-              <span className="inline-block px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded">
+              <span className="inline-block  cursor-pointer px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded">
                 {filters.category}
               </span>
             )}
             {(filters.priceRange.min || filters.priceRange.max) && (
-              <span className="inline-block px-2 py-1 bg-green-100 text-green-700 text-xs rounded">
+              <span className="inline-block cursor-pointer px-2 py-1 bg-green-100 text-green-700 text-xs rounded">
                 ${filters.priceRange.min || '0'} - ${filters.priceRange.max || '∞'}
               </span>
             )}
             {filters.minRating > 0 && (
-              <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded">
+              <span className="inline-block cursor-pointer px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded">
                 {filters.minRating}+ ★
               </span>
             )}
@@ -115,7 +115,7 @@ const ExpandableFilters = () => {
         <div className="flex items-end">
           <button
             onClick={clearFilters}
-            className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-red-200"
+            className="px-4 py-2 cursor-pointer text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-red-200"
           >
             Clear All Filters
           </button>

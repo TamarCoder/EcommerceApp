@@ -36,7 +36,7 @@ const PersonalInfoStep = ({
             value={formData.firstName}
             onChange={onChange}
             onBlur={onBlur}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+            className={`w-full cursor-pointer px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
               touched.firstName && errors.firstName
                 ? 'border-red-300 bg-red-50'
                 : 'border-gray-300'
@@ -58,7 +58,7 @@ const PersonalInfoStep = ({
             value={formData.lastName}
             onChange={onChange}
             onBlur={onBlur}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+            className={`w-full cursor-pointer px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
               touched.lastName && errors.lastName
                 ? 'border-red-300 bg-red-50'
                 : 'border-gray-300'
@@ -77,7 +77,7 @@ const PersonalInfoStep = ({
             Email Address
           </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Mail className="absolute cursor-pointer left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="email"
               name="email"
@@ -98,18 +98,18 @@ const PersonalInfoStep = ({
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block  text-sm font-medium text-gray-700 mb-2">
             Phone Number
           </label>
           <div className="relative">
-            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Phone className="absolute  left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={onChange}
               onBlur={onBlur}
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+              className={`w-full cursor-pointer pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
                 touched.phone && errors.phone
                   ? 'border-red-300 bg-red-50'
                   : 'border-gray-300'
