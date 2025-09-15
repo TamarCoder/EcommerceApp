@@ -1,18 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // შენი არსებული image configuration
+  // Image configuration
   images: {
     domains: ["images.unsplash.com"],
-    unoptimized: true,
+    // უკეთესია remotePatterns გამოყენება domains-ის მაგივრად
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
-  
-  // AWS Amplify optimizations
-  output: 'standalone',
-  distDir: '.next',
+ 
   
   experimental: {
-    // CSS optimizations
-    cssChunking: false,
+    // ✅ სწორი ღირებულება
+    cssChunking: 'strict', // ან მთლიანად წაშალე ეს ლაინი
   },
   
   // Performance optimizations
