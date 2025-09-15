@@ -2,8 +2,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import useEcommerceStore, { Product } from "../../Store/useStore";
-import { Check, Heart, ShoppingCart, Star } from "lucide-react";
+ 
 import QuickViewModal from "../QuickViewModal/QuickViewModal";
+import { Heart, Star, Check, ShoppingCart } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
