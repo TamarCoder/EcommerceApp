@@ -1,7 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
-@import "tailwindcss";
 
-:root {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
     --background: 255 255 255;
     --foreground: 0 0 0;
     --card: 255 255 255;
@@ -21,14 +25,17 @@
     --border: 229 231 235;
     --input: 229 231 235;
     --ring: 99 102 241;
-}
-* {
-    font-family: "Inter", system-ui, -apple-system, sans-serif;
-}
-html {
-    scroll-behavior: smooth;
-}
+  }
 
-button{
+  * {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  button {
     cursor: pointer;
+  }
 }
