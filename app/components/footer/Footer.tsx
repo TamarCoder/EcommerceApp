@@ -1,6 +1,4 @@
 
-
-
 const Footer = () => {
     return  (
         <footer className="bg-white cursor-pointer border-t mt-12">

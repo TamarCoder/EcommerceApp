@@ -125,12 +125,12 @@ const products: Product[] = [
 const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
   const { getFilteredProducts, filters } = useEcommerceStore();
 
-  // Filter and sort products using the store function
+
   const filteredProducts = useMemo(() => {
     return getFilteredProducts(products);
   }, [products, filters, getFilteredProducts]);
 
-  // No results found component
+
   const NoResults = () => (
     <div className="col-span-full cursor-pointer text-center py-16">
       <div className="text-gray-400 mb-4 cursor-pointer">
@@ -167,7 +167,7 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
       <main className="w-full cursor-pointer px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-7xl mx-auto cursor-pointer">
           
-          {/* Results Header */}
+
           <div className="mb-6 cursor-pointer flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <p className="text-gray-600 text-sm sm:text-base">
@@ -184,7 +184,7 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
                 )}
               </p>
               
-              {/* Active filters summary */}
+
               {(filters.searchQuery || filters.category !== 'all' || filters.priceRange.min || filters.priceRange.max || filters.minRating > 0) && (
                 <div className="flex cursor-pointer flex-wrap gap-2 mt-2">
                   {filters.searchQuery && (
@@ -211,7 +211,6 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
               )}
             </div>
 
-            {/* Sort info */}
             {filteredProducts.length > 0 && (
               <div className="text-sm text-gray-500 cursor-pointer">
                 Sorted by: <span className="font-medium capitalize">
@@ -223,7 +222,6 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
             )}
           </div>
 
-          {/* Products Grid/List */}
           {filteredProducts.length === 0 ? (
             <NoResults />
           ) : (
@@ -243,7 +241,6 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
             </div>
           )}
 
-          {/* Load More Button (for future pagination) */}
           {filteredProducts.length > 0 && filteredProducts.length >= 8 && (
             <div className="mt-12 cursor-pointer text-center">
               <button className="px-6 cursor-pointer py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium">

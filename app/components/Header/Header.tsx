@@ -1,4 +1,3 @@
-// Header/Header.tsx
 "use client";
 import { Search, ShoppingCart as ShoppingCartIcon, X } from "lucide-react";
 import { useState, useRef, ChangeEvent } from "react";

@@ -1,4 +1,3 @@
-// SortDropdown/SortDropdown.tsx
 "use client";
 import { ChangeEvent } from "react";
 import useEcommerceStore, { Filters } from "../../Store/useStore";

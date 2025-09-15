@@ -3,14 +3,11 @@
 
 import useEcommerceStore from "../../Store/useStore";
 
- 
 
-// TypeScript interface for icon props
 interface IconProps {
   className?: string;
 }
 
-// Custom Grid Icon (lucide-react-ის ნაცვლად)
 const Grid = ({ className }: IconProps) => (
   <svg
     className={className}
@@ -27,8 +24,6 @@ const Grid = ({ className }: IconProps) => (
     <rect x="3" y="14" width="7" height="7" />
   </svg>
 );
-
-// Custom List Icon (lucide-react-ის ნაცვლად)
 const List = ({ className }: IconProps) => (
   <svg
     className={className}
