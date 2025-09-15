@@ -8,26 +8,23 @@
     "start": "next start",
     "lint": "eslint"
   },
-  "dependencies": {
+ "dependencies": {
     "@hookform/resolvers": "^5.2.1",
-    "formik": "^2.4.6",
-    "lucide-react": "^0.542.0",
-    "next": "15.5.2",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-hook-form": "^7.62.0",
+    "axios": "^1.10.0",
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "sass": "^1.89.2",
     "yup": "^1.7.0",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.2",
-    "tailwindcss": "^4",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.5",
     "typescript": "^5"
   }
 }
