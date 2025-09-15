@@ -31,11 +31,21 @@
     font-family: "Inter", system-ui, -apple-system, sans-serif;
   }
 
+  *, 
+  *:hover, 
+  button, 
+  button:hover,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    cursor: pointer !important;
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   button {
-    cursor: pointer;
+    cursor: pointer !important;
   }
 }

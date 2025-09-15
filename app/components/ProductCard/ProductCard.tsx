@@ -23,13 +23,23 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
+  const handleQuickViewOpen = () => {
+    console.log('Opening quick view for:', product.name);
+    setShowQuickView(true);
+  };
+
+  const handleQuickViewClose = () => {
+    console.log('Closing quick view');
+    setShowQuickView(false);
+  };
+
   if (viewMode === 'list') {
     return (
-      <div className="group relative cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex">
+      <div className="group relative bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex">
         {/* Badge */}
         {product.badge && (
           <span
-            className={`absolute cursor-pointer top-4 left-4 z-10 px-3 py-1 text-xs font-semibold rounded-full ${
+            className={`absolute top-4 left-4 z-10 px-3 py-1 text-xs font-semibold rounded-full ${
               product.badge === "Sale"
                 ? "bg-red-100 text-red-600"
                 : product.badge === "New"
@@ -45,20 +55,23 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
 
         {/* Favorite Button */}
         <button
-          onClick={() => toggleFavorite(product.id)}
-          className="absolute cursor-pointer top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur rounded-full shadow-md hover:scale-110 transition-transform"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleFavorite(product.id);
+          }}
+          className="absolute top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur rounded-full shadow-md hover:scale-110 transition-transform cursor-pointer"
         >
           <Heart
-            className={`w-5 h-5 cursor-pointer ${
+            className={`w-5 h-5 ${
               isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
             }`}
           />
         </button>
 
         {/* Image */}
-        <div className="relative cursor-pointer w-48 h-48 flex-shrink-0 overflow-hidden">
+        <div className="relative w-48 h-48 flex-shrink-0 overflow-hidden cursor-pointer">
           {!imageLoaded && (
-            <div className="absolute cursor-pointer inset-0 bg-gray-100 animate-pulse" />
+            <div className="absolute inset-0 bg-gray-100 animate-pulse" />
           )}
           <Image
             src={`${product.image}?auto=format&fit=crop&w=400&q=80`}
@@ -66,15 +79,15 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
             fill
             unoptimized
             onLoadingComplete={() => setImageLoaded(true)}
-            className={`cursor-pointer w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
+            className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
               imageLoaded ? "opacity-100" : "opacity-0"
             }`}
-            onClick={() => setShowQuickView(true)}
+            onClick={handleQuickViewOpen}
           />
         </div>
 
         {/* Content */}
-        <div className="flex-1 cursor-pointer p-6 flex flex-col justify-between">
+        <div className="flex-1 p-6 flex flex-col justify-between">
           <div>
             <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-2">
               {product.name}
@@ -85,12 +98,12 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
             </p>
 
             {/* Rating */}
-            <div className="flex cursor-pointer items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-4 h-4 cursor-pointer ${
+                    className={`w-4 h-4 ${
                       i < Math.floor(product.rating)
                         ? "fill-yellow-400 text-yellow-400"
                         : "text-gray-300"
@@ -104,9 +117,9 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
             </div>
           </div>
 
-          <div className="flex cursor-pointer items-center justify-between">
+          <div className="flex items-center justify-between">
             {/* Price */}
-            <div className="flex items-center  cursor-pointer gap-2">
+            <div className="flex items-center gap-2">
               <span className="text-2xl font-bold text-gray-900">
                 ${product.price}
               </span>
@@ -123,17 +136,23 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
             </div>
 
             {/* Actions */}
-            <div className="flex cursor-pointer items-center gap-2">
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => setShowQuickView(true)}
-                className=" cursor-pointer px-3 py-1.5 text-sm border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleQuickViewOpen();
+                }}
+                className="px-3 py-1.5 text-sm border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 Quick View
               </button>
               
               <button
-                onClick={() => addToCart(product)}
-                className={` cursor-pointer px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(product);
+                }}
+                className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center gap-2 cursor-pointer ${
                   isInCart
                     ? "bg-green-100 text-green-700 hover:bg-green-200"
                     : "bg-indigo-600 text-white hover:bg-indigo-700"
@@ -141,12 +160,12 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
               >
                 {isInCart ? (
                   <>
-                    <Check className="w-4 h-4 cursor-pointer" />
+                    <Check className="w-4 h-4" />
                     Added
                   </>
                 ) : (
                   <>
-                    <ShoppingCart className="w-4 h-4 cursor-pointer" />
+                    <ShoppingCart className="w-4 h-4" />
                     Add to Cart
                   </>
                 )}
@@ -159,7 +178,7 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
         {showQuickView && (
           <QuickViewModal
             product={product}
-            onClose={() => setShowQuickView(false)}
+            onClose={handleQuickViewClose}
           />
         )}
       </div>
@@ -168,11 +187,11 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
 
   // Grid View (default)
   return (
-    <div className="group relative cursor-pointer bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+    <div className="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
       {/* Badge */}
       {product.badge && (
         <span
-          className={`absolute cursor-pointer top-4 left-4 z-10 px-3 py-1 text-xs font-semibold rounded-full ${
+          className={`absolute top-4 left-4 z-10 px-3 py-1 text-xs font-semibold rounded-full ${
             product.badge === "Sale"
               ? "bg-red-100 text-red-600"
               : product.badge === "New"
@@ -188,20 +207,23 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
 
       {/* Favorite Button */}
       <button
-        onClick={() => toggleFavorite(product.id)}
-        className="cursor-pointer absolute top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur rounded-full shadow-md hover:scale-110 transition-transform"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleFavorite(product.id);
+        }}
+        className="absolute top-4 right-4 z-10 p-2 bg-white/90 backdrop-blur rounded-full shadow-md hover:scale-110 transition-transform cursor-pointer"
       >
         <Heart
-          className={`w-5 h-5 cursor-pointer ${
+          className={`w-5 h-5 ${
             isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
           }`}
         />
       </button>
 
       {/* Image */}
-      <div className="relative cursor-pointer h-64 overflow-hidden">
+      <div className="relative h-64 overflow-hidden">
         {!imageLoaded && (
-          <div className="absolute cursor-pointer inset-0 bg-gray-100 animate-pulse" />
+          <div className="absolute inset-0 bg-gray-100 animate-pulse" />
         )}
         <Image
           src={`${product.image}?auto=format&fit=crop&w=500&q=80`}
@@ -209,16 +231,19 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
           fill
           unoptimized
           onLoadingComplete={() => setImageLoaded(true)}
-          className={`cursor-pointer w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ${
+          className={`w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ${
             imageLoaded ? "opacity-100" : "opacity-0"
           }`}
         />
 
         {/* Quick View Overlay */}
-        <div className="absolute cursor-pointer inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <button
-            onClick={() => setShowQuickView(true)}
-            className="px-4 py-2 cursor-pointer bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-colors transform scale-95 group-hover:scale-100"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleQuickViewOpen();
+            }}
+            className="px-4 py-2 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-colors transform scale-95 group-hover:scale-100 cursor-pointer"
           >
             Quick View
           </button>
@@ -226,14 +251,14 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
       </div>
 
       {/* Content */}
-      <div className="p-4 cursor-pointer">
-        <h3 className="font-semibold cursor-pointer text-gray-900 mb-1 line-clamp-2">
+      <div className="p-4">
+        <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">
           {product.name}
         </h3>
 
         {/* Rating */}
-        <div className="flex  cursor-pointer items-center gap-2 mb-2">
-          <div className="flex cursor-pointer items-center">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center">
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
@@ -249,8 +274,8 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
         </div>
 
         {/* Price */}
-        <div className="flex  cursor-pointer items-center gap-2 mb-3">
-          <span className="text-2xl cursor-pointer font-bold text-gray-900">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-2xl font-bold text-gray-900">
             ${product.price}
           </span>
           {product.originalPrice && (
@@ -267,8 +292,11 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
 
         {/* Add to Cart Button */}
         <button
-          onClick={() => addToCart(product)}
-          className={`w-full cursor-pointer py-2 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
+          onClick={(e) => {
+            e.stopPropagation();
+            addToCart(product);
+          }}
+          className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer ${
             isInCart
               ? "bg-green-100 text-green-700 hover:bg-green-200"
               : "bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-lg"
@@ -276,12 +304,12 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
         >
           {isInCart ? (
             <>
-              <Check className="w-5 h-5 cursor-pointer" />
+              <Check className="w-5 h-5" />
               Added to Cart
             </>
           ) : (
             <>
-              <ShoppingCart className="w-5 h-5 cursor-pointer" />
+              <ShoppingCart className="w-5 h-5" />
               Add to Cart
             </>
           )}
@@ -292,7 +320,7 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
       {showQuickView && (
         <QuickViewModal
           product={product}
-          onClose={() => setShowQuickView(false)}
+          onClose={handleQuickViewClose}
         />
       )}
     </div>
