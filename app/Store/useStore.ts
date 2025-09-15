@@ -1,102 +1,103 @@
 import { create } from 'zustand';
 
-// პროდუქტის ინტერფეისი - როგორ გამოიყურება ერთი პროდუქტი
+// პროდუქტის ინტერფეისი
 interface Product {
-  id: number;                
-  name: string;                   
-  price: number;                  
-  originalPrice: number | null;    
-  image: string;                   
-  category: string;                
-  rating: number;                 
-  reviews: number;                
-  badge: string | null;           
-  description: string;         
+  id: number;
+  name: string;
+  price: number;
+  originalPrice: number | null;
+  image: string;
+  category: string;
+  rating: number;
+  reviews: number;
+  badge: string | null;
+  description: string;
 }
 
-// კალათში არსებული პროდუქტი - ეს არის პროდუქტი + რაოდენობა
+// კალათში არსებული პროდუქტი
 interface CartItem extends Product {
-  quantity: number;               // რამდენი ცალი უნდა მომხმარებელს
+  quantity: number;
 }
 
-// ფილტრების ინტერფეისი - როგორ ირჩევს მომხმარებელი პროდუქტებს
+// ფილტრების ინტერფეისი
 interface Filters {
-  category: string;                                           // რომელი კატეგორია ("ყველა", "ელექტრონიკა", ასეს.)
-  searchQuery: string;                                        // რას ძებნის მომხმარებელი
-  sortBy: 'featured' | 'price-low' | 'price-high' | 'rating'; // როგორ დალაგება (ფასით, რეიტინგით)
-  viewMode: 'grid' | 'list';                                  // როგორ ნახვა (ბადე ან ჩამონათვალი)
-  showFilters: boolean;                                       // ჩანს თუ არა დამატებითი ფილტრები
+  category: string;
+  searchQuery: string;
+  sortBy: 'featured' | 'price-low' | 'price-high' | 'rating';
+  viewMode: 'grid' | 'list';
+  showFilters: boolean;
   priceRange: {
-    min: string;                                              // მინ. ფასი
-    max: string;                                              // მაქს. ფასი
+    min: string;
+    max: string;
   };
-  minRating: number;                                          // მინ. რეიტინგი
+  minRating: number;
 }
 
 // მთელი აპლიკაციის მდგომარეობა და ფუნქციები
 interface EcommerceState {
   // მდგომარეობა (State)
-  cart: CartItem[];                               // კალათაში არსებული პროდუქტები
-  favorites: number[];                            // რჩეული პროდუქტების ID-ები
-  filters: Filters;                               // ძიებისა და ფილტრაციის პარამეტრები
+  cart: CartItem[];
+  favorites: number[];
+  filters: Filters;
 
   // კალათის ფუნქციები
-  addToCart: (product: Product) => void;          
-  removeFromCart: (productId: number) => void;   
-  updateQuantity: (productId: number, quantity: number) => void; 
-  clearCart: () => void;                        
+  addToCart: (product: Product) => void;
+  removeFromCart: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
+  clearCart: () => void;
 
   // რჩეული პროდუქტების ფუნქციები
-  toggleFavorite: (productId: number) => void;   // რჩეულში დამატება/ამოშლა
+  toggleFavorite: (productId: number) => void;
 
   // ფილტრების ფუნქციები
-  setCategory: (category: string) => void;        // კატეგორიის შეცვლა
-  setSearchQuery: (searchQuery: string) => void; // ძიება
-  setSortBy: (sortBy: Filters['sortBy']) => void; // დალაგება
-  toggleFilters: () => void;                      // ფილტრების ჩვენება/დამალვა
-  setPriceRange: (priceRange: Filters['priceRange']) => void; // ფასების დიაპაზონის შეცვლა
-  setMinRating: (minRating: number) => void;      // მინ. რეიტინგის შეცვლა
-  clearFilters: () => void;                       // ყველა ფილტრის გასუფთავება
+  setCategory: (category: string) => void;
+  setSearchQuery: (searchQuery: string) => void;
+  setSortBy: (sortBy: Filters['sortBy']) => void;
+  setViewMode: (viewMode: Filters['viewMode']) => void; // ← ეს დამატებული იყო
+  toggleFilters: () => void;
+  setPriceRange: (priceRange: Filters['priceRange']) => void;
+  setMinRating: (minRating: number) => void;
+  clearFilters: () => void;
 
-  // დამხმარე ფუნქცია
-  getFilteredProducts: (products: Product[]) => Product[]; // ფილტრაცია და დალაგება
+  // დამხმარე ფუნქციები
+  getFilteredProducts: (products: Product[]) => Product[];
+  getCartTotal: () => number; // ← ახალი: კალათის საერთო ღირებულება
+  getCartItemsCount: () => number; // ← ახალი: კალათაში მთლიანი პროდუქტების რაოდენობა
+  isInCart: (productId: number) => boolean; // ← ახალი: არის თუ არა პროდუქტი კალათაში
+  isFavorite: (productId: number) => boolean; // ← ახალი: არის თუ არა პროდუქტი რჩეულებში
 }
 
 const useEcommerceStore = create<EcommerceState>((set, get) => ({
   // საწყისი მდგომარეობა
-  cart: [],               
-  favorites: [],          
+  cart: [],
+  favorites: [],
   
   filters: {
-    category: 'all',     
-    searchQuery: '',      
-    sortBy: 'featured',   
-    viewMode: 'grid',   
-    showFilters: false,   
-    
+    category: 'all',
+    searchQuery: '',
+    sortBy: 'featured',
+    viewMode: 'grid',
+    showFilters: false,
     priceRange: {
-      min: '',            
-      max: ''             
+      min: '',
+      max: ''
     },
-    minRating: 0         
+    minRating: 0
   },
 
   // კალათის ფუნქციები
   addToCart: (product: Product) => set((state) => {
-    // ვინახავთ უკვე არის თუ არა ეს პროდუქტი კალათაში
     const existingItem = state.cart.find((item) => item.id === product.id);
     
     if (existingItem) {
-      // თუ უკვე არის, რაოდენობას ვზრდით
       return {
         cart: state.cart.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }   
+            ? { ...item, quantity: item.quantity + 1 }
             : item
         )
       };
     } else {
-      // თუ არ არის, ახალს ვამატებთ 1 რაოდენობით
       return {
         cart: [...state.cart, { ...product, quantity: 1 }]
       };
@@ -104,24 +105,31 @@ const useEcommerceStore = create<EcommerceState>((set, get) => ({
   }),
 
   removeFromCart: (productId: number) => set((state) => ({
-     
     cart: state.cart.filter((item) => item.id !== productId)
   })),
 
-  updateQuantity: (productId: number, quantity: number) => set((state) => ({
-   
-    cart: state.cart.map((item) =>
-      item.id === productId ? { ...item, quantity } : item
-    )
-  })),
+  updateQuantity: (productId: number, quantity: number) => set((state) => {
+    // თუ რაოდენობა 0 ან ნაკლებია, პროდუქტი კალათიდან უნდა ამოიშალოს
+    if (quantity <= 0) {
+      return {
+        cart: state.cart.filter((item) => item.id !== productId)
+      };
+    }
+    
+    return {
+      cart: state.cart.map((item) =>
+        item.id === productId ? { ...item, quantity } : item
+      )
+    };
+  }),
 
-  clearCart: () => set({ cart: [] }),  
+  clearCart: () => set({ cart: [] }),
 
- 
+  // რჩეული პროდუქტების ფუნქციები
   toggleFavorite: (productId: number) => set((state) => ({
     favorites: state.favorites.includes(productId)
-      ? state.favorites.filter((id) => id !== productId)   
-      : [...state.favorites, productId]                    
+      ? state.favorites.filter((id) => id !== productId)
+      : [...state.favorites, productId]
   })),
 
   // ფილტრების ფუნქციები
@@ -130,7 +138,6 @@ const useEcommerceStore = create<EcommerceState>((set, get) => ({
   })),
 
   setSearchQuery: (searchQuery: string) => set((state) => ({
-    // ძიების სიტყვის შეცვლა
     filters: { ...state.filters, searchQuery }
   })),
 
@@ -139,7 +146,6 @@ const useEcommerceStore = create<EcommerceState>((set, get) => ({
   })),
 
   setViewMode: (viewMode: Filters['viewMode']) => set((state) => ({
-    // ნახვის რეჟიმის შეცვლა (ბადე ან სია)
     filters: { ...state.filters, viewMode }
   })),
 
@@ -152,78 +158,91 @@ const useEcommerceStore = create<EcommerceState>((set, get) => ({
   })),
 
   setMinRating: (minRating: number) => set((state) => ({
-  
     filters: { ...state.filters, minRating }
   })),
 
   clearFilters: () => set((state) => ({
-    // ყველა ფილტრის საწყის მდგომარეობაზე დაბრუნება
     filters: {
       ...state.filters,
-      category: 'all',         // ყველა კატეგორია
-      searchQuery: '',         // ცარიელი ძიება
-      priceRange: { min: '', max: '' }, // ფასები არ არის შეზღუდული
-      minRating: 0             // მინ. რეიტინგი 0
+      category: 'all',
+      searchQuery: '',
+      priceRange: { min: '', max: '' },
+      minRating: 0
     }
   })),
 
   // მთავარი ფუნქცია - პროდუქტების ფილტრაცია და დალაგება
   getFilteredProducts: (products: Product[]) => {
-    const { filters } = get(); // მიმდინარე ფილტრების მიღება
+    const { filters } = get();
     
-    // ვიწყებთ ფილტრაციას
     let filtered = products.filter((product) => {
       // კატეგორიის შემოწმება
       if (filters.category !== 'all' && product.category !== filters.category) {
-        return false; // თუ სხვა კატეგორიისაა, არ ჩავრთოთ
+        return false;
       }
       
-      // ძიების სიტყვის შემოწმება სახელსა და აღწერაში
+      // ძიების სიტყვის შემოწმება
       if (filters.searchQuery && 
           !product.name.toLowerCase().includes(filters.searchQuery.toLowerCase()) &&
           !product.description.toLowerCase().includes(filters.searchQuery.toLowerCase())) {
-        return false; // თუ ძიების სიტყვა არ მოიძებნება, არ ჩავრთოთ
+        return false;
       }
       
-      // მინ. ფასის შემოწმება
+      // ფასის დიაპაზონის შემოწმება
       if (filters.priceRange.min && product.price < parseFloat(filters.priceRange.min)) {
-        return false; // თუ ფასი ნაკლებია მინ. ფასზე, არ ჩავრთოთ
+        return false;
       }
       
-      // მაქს. ფასის შემოწმება
       if (filters.priceRange.max && product.price > parseFloat(filters.priceRange.max)) {
-        return false; // თუ ფასი მეტია მაქს. ფასზე, არ ჩავრთოთ
+        return false;
       }
       
-      // მინ. რეიტინგის შემოწმება
+      // რეიტინგის შემოწმება
       if (filters.minRating && product.rating < filters.minRating) {
-        return false; // თუ რეიტინგი დაბალია, არ ჩავრთოთ
+        return false;
       }
       
-      return true; // ყველა ფილტრი გავიარა, ჩავრთოთ
+      return true;
     });
 
-    // ახლა ვალაგებთ ფილტრაციის შემდეგ
+    // დალაგება
     switch (filters.sortBy) {
       case 'price-low':
-        // ფასით ზრდადობით (იაფიდან ძვირისკენ)
         filtered.sort((a, b) => a.price - b.price);
         break;
       case 'price-high':
-        // ფასით კლებადობით (ძვირიდან იაფისკენ)
         filtered.sort((a, b) => b.price - a.price);
         break;
       case 'rating':
-        // რეიტინგით კლებადობით (საუკეთესოდან ყველაზე ცუდისკენ)
         filtered.sort((a, b) => b.rating - a.rating);
         break;
       case 'featured':
       default:
-        // რჩეული პროდუქტები - ძველი თანმიმდევრობა
         break;
     }
 
-    return filtered; // ვბრუნებთ ფილტრაციისა და დალაგების შემდეგ
+    return filtered;
+  },
+
+  // ახალი დამხმარე ფუნქციები
+  getCartTotal: () => {
+    const { cart } = get();
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  },
+
+  getCartItemsCount: () => {
+    const { cart } = get();
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  },
+
+  isInCart: (productId: number) => {
+    const { cart } = get();
+    return cart.some((item) => item.id === productId);
+  },
+
+  isFavorite: (productId: number) => {
+    const { favorites } = get();
+    return favorites.includes(productId);
   }
 }));
 
