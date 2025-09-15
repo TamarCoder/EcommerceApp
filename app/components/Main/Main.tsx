@@ -132,7 +132,7 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
 
 
   const NoResults = () => (
-    <div className="col-span-full cursor-pointer text-center py-16">
+    <div className="col-span-full   text-center py-16">
       <div className="text-gray-400 mb-4 cursor-pointer">
         <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -142,7 +142,7 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
       <p className="text-gray-600 mb-4">
         Try adjusting your filters or search terms to find what you're looking for.
       </p>
-      <div className="flex cursor-pointer flex-wrap justify-center gap-2 text-sm text-gray-500">
+      <div className="flex  flex-wrap justify-center gap-2 text-sm text-gray-500">
         {filters.searchQuery && (
           <span className="bg-gray-100 px-2 py-1 rounded">
             Search: "{filters.searchQuery}"
@@ -164,11 +164,11 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
 
   return (
     <>
-      <main className="w-full cursor-pointer px-4 sm:px-6 lg:px-8 py-8">
+      <main className="w-full   px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-7xl mx-auto cursor-pointer">
           
 
-          <div className="mb-6 cursor-pointer flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="mb-6  flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <p className="text-gray-600 text-sm sm:text-base">
                 {filteredProducts.length === 0 ? (
@@ -186,24 +186,24 @@ const Main = ({ isCartOpen, setIsCartOpen }: MainProps) => {
               
 
               {(filters.searchQuery || filters.category !== 'all' || filters.priceRange.min || filters.priceRange.max || filters.minRating > 0) && (
-                <div className="flex cursor-pointer flex-wrap gap-2 mt-2">
+                <div className="flex   flex-wrap gap-2 mt-2">
                   {filters.searchQuery && (
-                    <span className="text-xs cursor-pointer bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                    <span className="text-xs   bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
                       "{filters.searchQuery}"
                     </span>
                   )}
                   {filters.category !== 'all' && (
-                    <span className="text-xs cursor-pointer bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full capitalize">
+                    <span className="text-xs   bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full capitalize">
                       {filters.category}
                     </span>
                   )}
                   {(filters.priceRange.min || filters.priceRange.max) && (
-                    <span className="text-xs cursor-pointer bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                    <span className="text-xs   bg-green-100 text-green-700 px-2 py-1 rounded-full">
                       ${filters.priceRange.min || '0'} - ${filters.priceRange.max || '∞'}
                     </span>
                   )}
                   {filters.minRating > 0 && (
-                    <span className="text-xs cursor-pointer bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">
+                    <span className="text-xs  bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">
                       {filters.minRating}+ ⭐ 
                     </span>
                   )}

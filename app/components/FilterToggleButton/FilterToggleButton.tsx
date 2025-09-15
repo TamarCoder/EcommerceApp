@@ -17,7 +17,7 @@ const FilterToggleButton = () => {
           : 'border-gray-300 hover:bg-gray-50 text-gray-700'
       }`}
     >
-      <Filter className="w-4 h-4" />
+      <Filter className="w-4 h-4 cursor-pointer" />
       {filters.showFilters ? 'Hide Filters' : 'Show Filters'}
     </button>
   );

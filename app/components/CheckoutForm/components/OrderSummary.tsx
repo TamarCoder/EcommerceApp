@@ -21,7 +21,7 @@ const OrderSummary = ({ cart, total }: OrderSummaryProps) => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-12 h-12 cursor-pointer object-cover rounded"
+              className="w-12 h-12 object-cover rounded"
             />
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">{item.name}</p>

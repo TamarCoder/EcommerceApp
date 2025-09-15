@@ -1,4 +1,3 @@
-
 "use client";
 import useEcommerceStore from "../../Store/useStore";
 
@@ -13,7 +12,7 @@ const CategoryButtons = () => {
         <button
           key={category}
           onClick={() => setCategory(category)}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer ${
+          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
             filters.category === category
               ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
               : 'text-gray-600 hover:bg-gray-100 border border-gray-200'

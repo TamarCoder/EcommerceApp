@@ -33,22 +33,22 @@ const Header = ({ isCartOpen, setIsCartOpen }: HeaderProps) => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-4 sm:py-0">
           
           {/* Logo */}
-          <div className="flex  cursor-pointer justify-between items-center w-full sm:w-auto">
+          <div className="flex justify-between items-center w-full sm:w-auto">
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold text-indigo-600">ShopHub</h1>
-              <span className="hidden sm:block text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+              <span className="hidden cursor-pointer sm:block text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full hover:bg-gray-200 transition-colors">
                 E-commerce
               </span>
             </div>
 
             {/* Cart icon for small screens */}
             <button
-              className="sm:hidden cursor-pointer relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="sm:hidden relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
               onClick={() => setIsCartOpen(true)}
             >
-              <ShoppingCartIcon className="w-6 h-6 text-gray-700 cursor-pointer " />
+              <ShoppingCartIcon className="w-6 h-6 text-gray-700" />
               {cartItemsCount > 0 && (
-                <span className=" cursor-pointer absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
+                <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium">
                   {cartItemsCount > 99 ? '99+' : cartItemsCount}
                 </span>
               )}
@@ -56,13 +56,13 @@ const Header = ({ isCartOpen, setIsCartOpen }: HeaderProps) => {
           </div>
 
           {/* Search Bar */}
-          <div className="w-full cursor-pointer  sm:flex-1 sm:max-w-md lg:max-w-lg">
+          <div className="w-full sm:flex-1 sm:max-w-md lg:max-w-lg">
             <div 
-              className={`relative cursor-pointer  transition-all duration-200 ${
+              className={`relative transition-all duration-200 ${
                 isSearchFocused ? 'ring-2 ring-indigo-500 rounded-lg' : ''
               }`}
             >
-              <Search className="cursor-pointer absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
               
               <input
                 ref={searchRef}
@@ -72,13 +72,13 @@ const Header = ({ isCartOpen, setIsCartOpen }: HeaderProps) => {
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 placeholder="Search products, categories..."
-                className="w-full cursor-pointer pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-colors"
+                className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-colors"
               />
               
               {filters.searchQuery && (
                 <button
                   onClick={clearSearch}
-                  className="absolute  cursor-pointer right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 rounded transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 rounded transition-colors"
                 >
                   <X className="w-4 h-4 text-gray-400" />
                 </button>
@@ -87,7 +87,7 @@ const Header = ({ isCartOpen, setIsCartOpen }: HeaderProps) => {
 
             {/* Search Results Counter */}
             {filters.searchQuery && (
-              <p className="text-xs cursor-pointer text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 mt-1">
                 Searching for "{filters.searchQuery}"
               </p>
             )}
@@ -96,7 +96,7 @@ const Header = ({ isCartOpen, setIsCartOpen }: HeaderProps) => {
           {/* Cart button for medium+ screens */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="cursor-pointer relative p-2 hover:bg-gray-100 rounded-lg transition-colors hidden sm:flex items-center gap-2"
+            className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors hidden sm:flex items-center gap-2"
           >
             <ShoppingCartIcon className="w-6 h-6 text-gray-700" />
             

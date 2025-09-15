@@ -24,7 +24,7 @@ const PaymentInfoStep = ({
 }: PaymentInfoStepProps) => {
   return (
     <div className="space-y-6">
-      <div className="flex cursor-pointer items-center gap-3">
+      <div className="flexitems-center gap-3">
         <CreditCard className="w-5 cursor-pointer h-5 text-indigo-600" />
         <h3 className="text-lg font-semibold text-gray-900">Payment Information</h3>
       </div>
@@ -57,7 +57,7 @@ const PaymentInfoStep = ({
       
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block cursor-pointer  text-sm font-medium text-gray-700 mb-2">
+          <label className="block  text-sm font-medium text-gray-700 mb-2">
             Expiry Date
           </label>
           <input
@@ -66,7 +66,7 @@ const PaymentInfoStep = ({
             value={formData.expiryDate}
             onChange={onExpiryChange}
             onBlur={onBlur}
-            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
+            className={`w-full px-4 py-3 border cursor-pointer rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${
               touched.expiryDate && errors.expiryDate
                 ? 'border-red-300 bg-red-50'
                 : 'border-gray-300'
